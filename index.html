@@ -7,7 +7,7 @@
 <style>
 body {
   margin: 0;
-  background: black;
+  background: linear-gradient(180deg, #000000, #0a0a0a, #000000);
   color: white;
   font-family: Arial;
 
@@ -19,19 +19,59 @@ body {
   overflow: hidden;
 }
 
-/* FUNDO */
+/* 🌌 ESTRELAS ANIMADAS */
 .stars {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: url('https://i.imgur.com/8bKQX7G.png') repeat;
-  animation: moveStars 50s linear infinite;
-  opacity: 0.3;
+  overflow: hidden;
 }
 
-@keyframes moveStars {
-  from {background-position: 0 0;}
-  to {background-position: 1000px 1000px;}
+.stars::before,
+.stars::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.25;
+  animation: moverEstrelas 60s linear infinite;
+}
+
+.stars::after {
+  background-size: 80px 80px;
+  opacity: 0.15;
+  animation-duration: 120s;
+}
+
+@keyframes moverEstrelas {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-500px, -500px); }
+}
+
+/* 🌠 METEORO */
+.meteoro {
+  position: fixed;
+  top: -50px;
+  left: 100%;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(white, transparent);
+  opacity: 0.8;
+  transform: rotate(45deg);
+  animation: cair 1s linear forwards;
+}
+
+@keyframes cair {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-600px, 600px) rotate(45deg);
+    opacity: 0;
+  }
 }
 
 /* CARD */
@@ -114,7 +154,6 @@ button {
 #final2 {
   font-size: 20px;
   margin-top: 25px;
-  color: white;
 }
 
 /* ANIMAÇÕES */
@@ -207,6 +246,7 @@ button {
 
 <script>
 
+// LOGIN
 function verificar() {
   const nome = document.getElementById("senha").value.toLowerCase().trim();
 
@@ -238,7 +278,7 @@ function verificar() {
   }
 }
 
-// TEXTO INICIAL
+// TEXTO
 const mensagem = "Te amo, Laís ❤️";
 let i = 0;
 
@@ -252,7 +292,7 @@ function escrever() {
   }
 }
 
-// FINAL ESCREVENDO
+// FINAL
 const mensagemFinal = "Eres lo mejor que me ha pasado... 💖";
 let j = 0;
 
@@ -300,6 +340,26 @@ function gerarCoracoes() {
     setTimeout(() => heart.remove(), 5000);
   }, 200);
 }
+
+// 🌠 METEORO
+function criarMeteoro() {
+  const meteoro = document.createElement("div");
+  meteoro.classList.add("meteoro");
+
+  meteoro.style.top = Math.random() * 50 + "vh";
+  meteoro.style.left = "100vw";
+
+  document.body.appendChild(meteoro);
+
+  setTimeout(() => meteoro.remove(), 1000);
+}
+
+// ⏳ APARECE ALEATÓRIO
+setInterval(() => {
+  if (Math.random() < 0.2) {
+    criarMeteoro();
+  }
+}, 4000);
 
 </script>
 
