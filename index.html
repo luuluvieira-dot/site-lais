@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Laís ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  overflow: hidden;
+}
+
+/* FUNDO */
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.imgur.com/8bKQX7G.png') repeat;
+  animation: moveStars 50s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes moveStars {
+  from {background-position: 0 0;}
+  to {background-position: 1000px 1000px;}
+}
+
+/* CARD */
+.container {
+  position: relative;
+  z-index: 2;
+  background: rgba(0,0,0,0.7);
+  padding: 50px 30px;
+  border-radius: 25px;
+  backdrop-filter: blur(15px);
+  text-align: center;
+
+  width: 92%;
+  max-width: 500px;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+    max-width: none;
+    padding: 60px 25px;
+  }
+}
+
+/* INPUT */
+input {
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  width: 85%;
+  font-size: 16px;
+}
+
+/* BOTÃO */
+button {
+  padding: 14px 25px;
+  border: none;
+  border-radius: 12px;
+  background: #ff4d6d;
+  color: white;
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+/* TEXTOS */
+#texto {
+  font-size: 42px;
+  color: #ff4d6d;
+}
+
+#frase {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #ff4d6d;
+  animation: pulse 2s infinite;
+}
+
+#contador {
+  font-size: 20px;
+  color: #ff4d6d;
+  animation: brilho 2s infinite;
+}
+
+#final {
+  font-size: 17px;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+#surpresa {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #00ff88;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+#final2 {
+  font-size: 20px;
+  margin-top: 25px;
+  color: white;
+}
+
+/* ANIMAÇÕES */
+@keyframes pulse {
+  0% {opacity: 0.6;}
+  50% {opacity: 1;}
+  100% {opacity: 0.6;}
+}
+
+@keyframes brilho {
+  0% {text-shadow: 0 0 5px #ff4d6d;}
+  50% {text-shadow: 0 0 25px #ff4d6d;}
+  100% {text-shadow: 0 0 5px #ff4d6d;}
+}
+
+.fade-in {
+  animation: fadeUp 1.5s ease;
+}
+
+@keyframes fadeUp {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.glow {
+  animation: glowEffect 1.5s infinite alternate;
+}
+
+@keyframes glowEffect {
+  from {text-shadow: 0 0 5px #ff4d6d;}
+  to {text-shadow: 0 0 30px #ff4d6d;}
+}
+
+/* CORAÇÕES */
+.heart {
+  position: fixed;
+  bottom: 0;
+  animation: subir 5s linear infinite;
+}
+
+@keyframes subir {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-100vh);}
+}
+
+/* ESCONDER */
+#conteudo {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<!-- LOGIN -->
+<div class="container" id="login">
+  <h2 style="font-size:28px;">Escribe tu nombre 💖</h2>
+  <input type="text" id="senha" placeholder="Tu nombre...">
+  <br>
+  <button onclick="verificar()">Entrar</button>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="container fade-in" id="conteudo">
+
+  <h1 id="texto"></h1>
+
+  <div id="frase">Pienso en ti 💭❤️</div>
+
+  <div style="height:2px; background:#ffffff22; margin:20px;"></div>
+
+  <div id="contador"></div>
+
+  <p id="final">
+    No importa la distancia ni el tiempo… siempre hay algo que no cambia:
+    tú en mi mente y en mi corazón 💖
+  </p>
+
+  <p id="surpresa">Hay algo más que quiero decirte... 💚</p>
+
+  <p id="final2"></p>
+
+  <audio id="audio" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
+
+</div>
+
+<script>
+
+function verificar() {
+  const nome = document.getElementById("senha").value.toLowerCase().trim();
+
+  if (nome === "laís" || nome === "lais") {
+    document.getElementById("login").style.opacity = "0";
+
+    setTimeout(() => {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("conteudo").style.display = "block";
+
+      escrever();
+      iniciarContador();
+      document.getElementById("audio").play();
+      gerarCoracoes();
+
+      setTimeout(() => {
+        document.getElementById("final").style.opacity = "1";
+      }, 4000);
+
+      setTimeout(() => {
+        document.getElementById("surpresa").style.opacity = "1";
+      }, 8000);
+
+      setTimeout(() => {
+        escreverFinal();
+      }, 11000);
+
+    }, 800);
+  }
+}
+
+// TEXTO INICIAL
+const mensagem = "Te amo, Laís ❤️";
+let i = 0;
+
+function escrever() {
+  if (i < mensagem.length) {
+    document.getElementById("texto").innerHTML += mensagem.charAt(i);
+    i++;
+    setTimeout(escrever, 80);
+  } else {
+    document.getElementById("texto").classList.add("glow");
+  }
+}
+
+// FINAL ESCREVENDO
+const mensagemFinal = "Eres lo mejor que me ha pasado... 💖";
+let j = 0;
+
+function escreverFinal() {
+  if (j < mensagemFinal.length) {
+    document.getElementById("final2").innerHTML += mensagemFinal.charAt(j);
+    j++;
+    setTimeout(escreverFinal, 80);
+  }
+}
+
+// CONTADOR
+function iniciarContador() {
+  const destino = new Date("December 1, 2026").getTime();
+
+  setInterval(() => {
+    const agora = new Date().getTime();
+    const d = destino - agora;
+
+    const dias = Math.floor(d / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((d / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((d / (1000 * 60)) % 60);
+    const segundos = Math.floor((d / 1000) % 60);
+
+    document.getElementById("contador").innerHTML =
+      dias + " días 💖<br>" +
+      horas + "h " + minutos + "m " + segundos + "s";
+  }, 1000);
+}
+
+// CORAÇÕES
+function gerarCoracoes() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+
+    const cores = ["💖", "💚"];
+    heart.innerHTML = cores[Math.floor(Math.random() * cores.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 25 + 20) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+  }, 200);
+}
+
+</script>
+
+</body>
+</html>
